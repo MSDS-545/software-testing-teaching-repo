@@ -1,0 +1,20 @@
+{
+  "name": "node-istanbul-testing-demo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "mocha \"tests/**/*.test.js\"",
+    "coverage": "nyc --reporter=text --reporter=html npm test",
+    "coverage:check": "nyc --check-coverage --lines 80 --functions 80 --branches 75 npm test"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "chai": "^4.5.0",
+    "mocha": "^12.0.2",
+    "nyc": "^18.0.0",
+    "supertest": "^7.0.0"
+  }
+}
