@@ -13,6 +13,25 @@ Run:
 npm install
 npm test
 npm run coverage
+
+npm ls mocha diff serialize-javascript
+
+npm outdated
+
+npm audit
+
+npm install --save-dev mocha@latest
+
+npm audit
+
+npm ls mocha diff serialize-javascript
+
+npm audit fix --force
+
+
+npm install --save-dev mocha@latest
+npm audit
+npm test
 ```
 
 After `npm run coverage`, open `coverage/index.html` to inspect statement, branch, function, and line coverage.

@@ -25,6 +25,20 @@ python -m venv .venv
 source .venv/bin/activate        # macOS/Linux
 # .venv\\Scripts\\activate       # Windows PowerShell
 pip install -r requirements.txt
+
+
+
+******
+source .venv/bin/activate
+
+python -c "import streamlit; print(streamlit.__version__)"
+python -c "from streamlit.testing.v1 import AppTest; print('AppTest works')"
+
+python -m pytest
+
+python -m pip show streamlit
+
+which python
 ```
 
 Run all normal Python tests:
@@ -37,14 +51,80 @@ Run by testing level:
 
 ```bash
 python -m pytest -m unit
+python -m pytest -m unit -v
+python -m pytest -m unit -v -s
+python -m pytest -m unit -v -s
 python -m pytest -m integration
+python -m pytest -m integration -v
+python -m pytest -m integration -v -s
 python -m pytest -m acceptance
-```
+python -m pytest -m acceptance -v
+python -m pytest -m acceptance -v -s
 
+
+*************
+# Unit OR integration
+python -m pytest -m "unit or integration" -v
+
+# Integration OR acceptance
+python -m pytest -m "integration or acceptance" -v
+
+# Everything except unit tests
+python -m pytest -m "not unit" -v
+
+# All tests
+python -m pytest -v
+
+
+
+**************
+UNIT
+"Does this function work?"
+       ↓
+python -m pytest -m unit -v
+
+INTEGRATION
+"Do these components work together?"
+       ↓
+python -m pytest -m integration -v
+
+ACCEPTANCE
+"Does the application satisfy the user behavior?"
+       ↓
+python -m pytest -m acceptance -v
+
+
+@pytest.mark.integration
+def test_api_integration():
+    ...
+
+
+@pytest.mark.acceptance
+def test_user_can_get_greeting():
+    ...
+
+Does create_greeting("Student") return the correct string?
+
+
+Does the FastAPI endpoint call the greeting logic and return the expected JSON?
+
+
+Can a user enter a name in Streamlit, click the button, and see the expected result?
+
+
+
+Streamlit then creates a ScriptRunContext for things such as:
+st.title()
+st.button()
+st.text_input()
+st.session_state
+```
+pip install pytest-cov
 Run with coverage:
 
 ```bash
-pytest --cov=python_examples --cov-report=term-missing
+python -m pip install pytest-cov
+python -m pytest --cov=python_examples --cov-report=term-missing
 ```
 
 ## 2. Node.js / Istanbul setup
@@ -76,6 +156,4 @@ npm run coverage
 - **TDD:** write a failing test first (**Red**), implement the smallest behavior that passes (**Green**), then improve the design while tests remain green (**Refactor**).
 - **Coverage:** measures which code was executed by a test suite; high coverage does not itself prove correctness.
 
-## Instructor notes
 
-The examples are intentionally small so students can identify the boundary between testing levels. They are not intended as production architectures. The TDD starter is excluded from the default `pytest` run because it is supposed to fail before implementation.
